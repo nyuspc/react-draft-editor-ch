@@ -1,0 +1,27 @@
+.demo-root {
+  margin: 50px;
+  width: 90%;
+}
+.demo-wrapper {
+  border-top: 1px solid #F1F1F1;
+  border-bottom: 1px solid #F1F1F1;
+  padding: 5px;
+  height: 600px;
+  margin: 25px;
+}
+
+.demo-toolbar {
+  width: 98%;
+}
+
+.demo-display {
+  border: 1px solid #F1F1F1;
+  padding: 5px;
+  border-radius: 5px;
+  width: 570px;
+  border-radius: 2px;
+  height:600px;
+}
+.no-focus:focus {
+  outline: none;
+}

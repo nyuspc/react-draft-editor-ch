@@ -1,0 +1,11 @@
+.idea/
+.vscode/
+node_modules/
+dist/
+statics/
+*.iml
+webpack-assets.json
+webpack-stats.json
+npm-debug.log
+*.swp
+package-lock.json
