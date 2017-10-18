@@ -1,0 +1,31 @@
+.rde-toolbar {
+    border-bottom: 1px solid #F1F1F1;
+    padding: 2px;
+    height: 40px;
+}
+.rde-toolbar-button {
+    border: none;
+    background: none;
+    width: 40px;
+    height: 40px;
+    padding: 0;
+    margin-right: 2px;
+}
+
+.rde-toolbar-button img {
+    width: 40px;
+    height: 40px;
+    opacity: 0.7
+}
+
+.rde-toolbar-button:hover img {
+    opacity: 1;
+}
+
+.rde-toolbar-button:disabled img {
+    opacity: 0.4;
+}
+.rde-toolbar-button-on {
+    background-color: #EEEEEE;
+    border-radius: 4px;
+}

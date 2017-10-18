@@ -1,5 +1,5 @@
-import { Editor } from 'draft-js';
+import Editor from './components/Editor';
 
 module.exports = {
-  Editor
+    Editor
 };

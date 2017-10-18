@@ -1,0 +1,18 @@
+.rde-model-selector {
+    width: 350px;
+    height: 60px;
+    overflow-y: auto;
+    margin: 0 auto;
+}
+
+.rde-model-select-item {
+    border-radius: 5px;
+    height: 35px;
+    line-height:35px;
+    border: 1px solid #dddddd;
+    margin-bottom: 5px;
+}
+
+.rde-model-select-item:hover {
+    background-color: #F1F1F1;
+}

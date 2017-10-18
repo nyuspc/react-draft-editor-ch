@@ -1,0 +1,26 @@
+.rde-text-align-left {
+    text-align: left!important;
+}
+
+.rde-text-align-right {
+    text-align: right!important;
+}
+
+.rde-text-align-center {
+    text-align: center!important;
+}
+
+.public-DraftStyleDefault-ltr {
+    text-align: inherit;
+}
+
+.DraftEditor-root {
+    padding: 10px;
+}
+
+figure {
+    -webkit-margin-before: 1em;
+    -webkit-margin-after: 1em;
+    -webkit-margin-start: 0;
+    -webkit-margin-end: 0;
+}

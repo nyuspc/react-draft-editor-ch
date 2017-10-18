@@ -1,0 +1,76 @@
+.rde-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 10;
+    background-color: rgba(0,0,0,0.6);
+}
+
+.rde-modal-body {
+    position: absolute;
+    width: 400px;
+    height: 300px;
+    top: calc(50% - 150px);
+    left: calc(50% - 200px);
+    background-color: #fff;
+    text-align: center;
+    padding: 5px;
+    z-index: 11;
+}
+
+.rde-modal-title {
+    font-size: 18px;
+    margin: 35px;
+}
+
+.rde-modal-input {
+    width: 300px;
+    margin: 5px;
+    border-radius: 5px;
+    height: 35px;
+    line-height:35px;
+    border: 1px solid #dddddd;
+    padding-left: 50px;
+}
+
+.rde-modal-btns {
+    margin: 30px;
+}
+
+.rde-modal-btns>button {
+    height: 35px;
+    width: 120px;
+    border-radius: 5px;
+    margin: 0 20px;
+}
+
+.rde-modal-btns>button:disabled {
+    opacity: 0.5;
+}
+
+.rde-modal-btn-ok {
+    color: #fff;
+    border: 1px solid #26A4E2;
+    background-color: #29B6F6;
+}
+.rde-modal-btn-ok:hover {
+    background-color: #26A4E2;
+}
+
+.rde-modal-btn-cancel {
+    border: 1px solid #dddddd;
+    background-color: #ffffff;
+}
+.rde-modal-btn-cancel:hover {
+    background-color: #dddddd;
+}
+
+.rde-modal-input-box img {
+    position: absolute;
+    opacity: 0.5;
+    margin: 7px 5px 5px 7px;
+    width: 35px;
+    height: 35px;
+}

@@ -1,0 +1,47 @@
+.rde-image-right {
+    text-align: right;
+}
+.rde-image-left {
+    text-align: left;
+}
+.rde-image-center {
+    text-align: center;
+}
+
+.rde-image-toolbar {
+    position: absolute;
+    background: rgba(255,255,255,0.7);
+    border: 2px solid rgba(0,0,0,0.5);
+    border-radius: 20px;
+    bottom: 10px;
+    left: calc(50% - 80px);
+    height: 40px;
+}
+
+.rde-image-wrapper {
+    position: relative;
+    display: inline-block;
+}
+
+.rde-image-wrapper img {
+    max-width: 100%;
+}
+button.rde-block-button {
+    border: none;
+    background: none;
+    padding: 0;
+}
+
+.rde-block-button {
+    width: 40px;
+    height: 40px;
+    opacity: 0.5;
+}
+
+.rde-block-button:hover {
+    opacity: 0.9;
+}
+
+.rde-image-is-selected {
+    box-shadow: 0 0 0 3px #EEEEEE;
+}
