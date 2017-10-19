@@ -41,7 +41,7 @@ export default class Image extends Component {
             anchorKey: key,
             focusKey: key,
             anchorOffset: 0,
-            focusOffset: 0
+            focusOffset: 1
         });
         setEditorState(EditorState.forceSelection(editorState, newSelection));
     }

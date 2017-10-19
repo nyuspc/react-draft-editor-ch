@@ -5,7 +5,7 @@ import { Entity } from 'draft-js';
 import Image from './Image';
 import Custom from './Custom';
 
-export default function blockRendererFunc(setEditorState, getEditorState, customBlockConfig) {
+export default function blockRendererFunc(setEditorState, getEditorState, customBlockConfig, imageUploader) {
     return (block) => {
         if (block.getType() === 'atomic') {
             const entityKey = block.getEntityAt(0);
@@ -17,7 +17,8 @@ export default function blockRendererFunc(setEditorState, getEditorState, custom
                         editable: false,
                         props: {
                             setEditorState,
-                            getEditorState
+                            getEditorState,
+                            imageUploader
                         }
                     };
                 }

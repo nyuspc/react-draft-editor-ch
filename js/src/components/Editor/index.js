@@ -9,7 +9,8 @@ import {
     RichUtils,
     convertToRaw,
     convertFromRaw,
-    CompositeDecorator
+    CompositeDecorator,
+    Modifier
 } from 'draft-js';
 
 import ToolBar from '../ToolBar';
@@ -23,6 +24,7 @@ export default class DraftEditor extends Component {
     static propTypes = {
         initContentState: PropTypes.object,
         customBlockConfig: PropTypes.object,
+        imageUploader: PropTypes.func.isRequired,
         readOnly: PropTypes.boolean,
         onChange: PropTypes.func,
         placeholder: PropTypes.string
@@ -88,6 +90,9 @@ export default class DraftEditor extends Component {
             const currentBlock = getCurrentBlock(editorState);
             const blockType = currentBlock.getType();
             const blockDepth = currentBlock.getDepth();
+            if (blockType === 'atomic') {
+                return 'handled';
+            }
             if (currentBlock.getLength() === 0) {
                 switch (blockType) {
                     case 'unordered-list-item':
@@ -129,15 +134,52 @@ export default class DraftEditor extends Component {
         return 'not-handled';
     }
     // key handle
-    handleKeyCommand: Function = (command) => {
-        const { editorState } = this.state;
+    handleKeyCommand: Function = (command, editorState) => {
+        console.log(command);
         const newState = RichUtils.handleKeyCommand(editorState, command);
         if (newState) {
             this.onChange(newState);
             return 'handled';
         }
+        const currentBlock = getCurrentBlock(editorState);
+        const blockType = currentBlock.getType();
+        if (blockType === 'atomic') {
+            if (command === 'delete' || command === 'backspace') {
+                const contentState = editorState.getCurrentContent();
+                const deletedState = EditorState.push(
+                    editorState,
+                    Modifier.removeRange(contentState, editorState.getSelection(), 'forward'),
+                    'remove-range'
+                );
+                const unstyledState = EditorState.push(
+                    deletedState,
+                    Modifier.setBlockType(deletedState.getCurrentContent(), editorState.getSelection(), 'unstyled'),
+                    'change-block-type',
+                );
+                if (unstyledState) {
+                    this.onChange(unstyledState);
+                    return 'handled';
+                }
+            }
+        }
         return 'not-handled';
     };
+    handleBeforeInput: Function = (chars, editorState) => {
+        const currentBlock = getCurrentBlock(editorState);
+        const blockType = currentBlock.getType();
+        if (blockType === 'atomic') {
+            return 'handled';
+        }
+        return 'not-handled';
+    };
+    handlePastedText: Function = (text, html, editorState) => {
+        const currentBlock = getCurrentBlock(editorState);
+        const blockType = currentBlock.getType();
+        if (blockType === 'atomic') {
+            return 'handled';
+        }
+        return 'not-handled';
+    }
     render() {
         const {
             placeholder
@@ -149,17 +191,25 @@ export default class DraftEditor extends Component {
             <div className="rde-wrap">
                 { !this.props.readOnly && <ToolBar
                     currentState={editorState}
+                    imageUploader={this.props.imageUploader}
                     changeState={this.changeEditorState}
                     customBlockConfig={this.props.customBlockConfig}
                 /> }
                 <Editor
                     onTab={this.onTab}
-                    blockRendererFn={blockRendererFunc(this.changeEditorState, this.getEditorState, this.props.customBlockConfig)}
+                    blockRendererFn={blockRendererFunc(
+                        this.changeEditorState,
+                        this.getEditorState,
+                        this.props.customBlockConfig,
+                        this.props.imageUploader
+                    )}
                     blockStyleFn={blockStyleFunc}
                     editorState={editorState}
                     onChange={this.onChange}
                     readOnly={this.props.readOnly}
                     handleKeyCommand={this.handleKeyCommand}
+                    handleBeforeInput={this.handleBeforeInput}
+                    handlePastedText={this.handlePastedText}
                     handleReturn={this.handleReturn}
                     placeholder={placeholder}
                 />

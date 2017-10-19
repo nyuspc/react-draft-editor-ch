@@ -170,6 +170,23 @@ class Demo extends Component {
             rawContentState: rawCS
         });
     }
+    imageUploader: Function = (file) => {
+        const headers = {
+            Accept: 'application/json'
+        };
+        const url = 'https://api2.factube.com/dbc/api/qiniu/uploadandgetURL';
+        const data = new FormData();
+        data.append('file', file);
+        return fetch(url, {
+            method: 'POST',
+            headers,
+            body: data
+        }).then(response => {
+            return response.json();
+        }).then( json => {
+            return ( { src: json.src } );
+        });
+    }
     suggestCustomData: Function = (key) => {
         const data = {
             baseId: '595e0167293aed3f001cff18',
@@ -301,6 +318,7 @@ class Demo extends Component {
                         <Editor
                             initContentState={this.state.rawContentState}
                             onChange={this.onContentStateChange}
+                            imageUploader={this.imageUploader}
                             customBlockConfig={customBlockConfig}
                             placeholder="写点什么吧..."
                             readOnly={this.state.readOnly}

@@ -21,7 +21,8 @@ export default class Image extends Component {
     };
     state: Object = {
         hovered: false,
-        isSelected: false
+        isSelected: false,
+        reloading: false
     };
     componentWillReceiveProps(props) {
         const { block, blockProps } = props;
@@ -44,6 +45,21 @@ export default class Image extends Component {
                 entityKey,
                 { src }
             );
+            this.setState({
+                reloading: true
+            });
+            this.props.blockProps.imageUploader(file).then((data) => {
+                const editorState = this.props.blockProps.getEditorState();
+                const contentState = editorState.getCurrentContent().mergeEntityData(
+                    entityKey,
+                    { src: data.src }
+                );
+                const newerState = EditorState.push(editorState, contentState, 'apply-entity');
+                this.setState({
+                    reloading: false
+                });
+                this.props.blockProps.setEditorState(EditorState.forceSelection(newerState, newerState.getSelection()));
+            });
         }
     }
     setEntityAlignment: Function = (alignment) => {
@@ -80,7 +96,7 @@ export default class Image extends Component {
             anchorKey: key,
             focusKey: key,
             anchorOffset: 0,
-            focusOffset: 0
+            focusOffset: 1
         });
         setEditorState(EditorState.forceSelection(editorState, newSelection));
     }
@@ -128,7 +144,7 @@ export default class Image extends Component {
             const entity = contentState.getEntity(entityKey);
             blockData = entity.getData();
         }
-        const { src, alignment } = blockData;
+        const { src, alignment, loading } = blockData;
         // const { hovered } = this.state;
         return (
             <div
@@ -141,12 +157,20 @@ export default class Image extends Component {
                     onMouseLeave={this.toggleLeave}
                     className="rde-image-wrapper"
                 >
+                    { (loading || this.state.reloading) &&
+                        <div className="rde-image-loader">
+                            <div className="spinner">
+                                <div className="double-bounce1" />
+                                <div className="double-bounce2" />
+                            </div>
+                        </div>
+                    }
                     <img
                         className={`rde-image-content${this.state.isSelected ? ' rde-image-is-selected' : ''}`}
                         alt=""
                         src={src}
                     />
-                    { this.state.hovered && this.renderAlignmentOptions() }
+                    { (this.state.hovered && !loading) && this.renderAlignmentOptions() }
                     <input
                         type="file"
                         accept="image/jpg,image/png,image/gif,image/jpeg"

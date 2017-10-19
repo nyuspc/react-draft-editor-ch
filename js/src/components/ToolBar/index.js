@@ -39,6 +39,7 @@ export default class ToolBar extends Component {
     static propTypes = {
         currentState: PropTypes.object.isRequired,
         changeState: PropTypes.func.isRequired,
+        imageUploader: PropTypes.func.isRequired,
         customBlockConfig: PropTypes.object
     };
     state = {
@@ -76,10 +77,8 @@ export default class ToolBar extends Component {
         );
         if (newState) {
             if (blockType === 'ordered-list-item' || blockType === 'unordered-list-item') {
-                console.log(1);
                 changeState(setBlockData(newState, { 'text-align': undefined }));
             } else {
-                console.log(2);
                 changeState(newState);
             }
         }
@@ -114,8 +113,17 @@ export default class ToolBar extends Component {
         if (file.type.indexOf('image/') === 0) {
             const src = URL.createObjectURL(file);
             const { currentState } = this.props;
-            const entityKey = Entity.create('IMAGE', 'INMUTABLE', { src, alignment: 'center' });
-            this.props.changeState(AtomicBlockUtils.insertAtomicBlock(currentState, entityKey, ' '));
+            const entityKey = Entity.create('IMAGE', 'MUTABLE', { src, alignment: 'center', loading: true });
+            const newState = AtomicBlockUtils.insertAtomicBlock(currentState, entityKey, ' ');
+            this.props.changeState(newState);
+            this.props.imageUploader(file).then((data) => {
+                const contentState = newState.getCurrentContent().replaceEntityData(
+                    entityKey,
+                    { src: data.src, alignment: 'center' }
+                );
+                const newerState = EditorState.push(newState, contentState, 'apply-entity');
+                this.props.changeState(EditorState.forceSelection(newerState, newerState.getSelection()));
+            });
         }
     }
     // change alignment data
@@ -303,9 +311,7 @@ export default class ToolBar extends Component {
                     className="rde-toolbar-button"
                     title="插入超链接"
                     onClick={this.showLinkModal}
-                    disabled={this.state.currentBlockType === 'atomic'
-                        || this.state.currentBlockType === 'ordered-list-item'
-                        || this.state.currentBlockType === 'unordered-list-item'}
+                    disabled={this.state.currentBlockType === 'atomic'}
                 >
                     <img src={linkIcon} alt="Link" />
                 </button>
