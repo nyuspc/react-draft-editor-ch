@@ -11,17 +11,16 @@
 }
 
 .demo-content {
-    width: calc(100% - 330px);
+    width: calc(100% - 630px);
     margin-right: 10px;
     border: 1px solid #F1F1F1;
     min-height: 600px;
 }
 
 .demo-display {
-  background-color: rgb(0, 43, 54);
   padding: 5px;
   height:600px;
-  width: 300px;
+  width: 600px;
 }
 .no-focus:focus {
   outline: none;

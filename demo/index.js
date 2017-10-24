@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { render } from 'react-dom'; // eslint-disable-line import/no-extraneous-dependencies
-import JSONTree from 'react-json-tree';
 import { Editor } from '../js/src';
+import { stateToHTML } from '../js/src';
 
 import DocCard from './DocCard';
 import styles from './styles.css'; // eslint-disable-line no-unused-vars
@@ -162,7 +162,8 @@ class Demo extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            rawContentState
+            rawContentState,
+            readOnly: false
         };
     }
     onContentStateChange: Function = (rawCS) => {
@@ -325,9 +326,7 @@ class Demo extends Component {
                         />
                     </div>
                     <div className="demo-display">
-                        <JSONTree
-                            data={this.state.rawContentState}
-                        />
+                        <div dangerouslySetInnerHTML={{ __html: stateToHTML(this.state.rawContentState) }} />
                     </div>
                 </div>
             </div>

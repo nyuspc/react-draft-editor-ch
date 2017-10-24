@@ -5,6 +5,8 @@ import {
     Modifier
 } from 'draft-js';
 
+import stateToHTML from './draftToHTML';
+
 
 /**
 * Function returns collection of currently selected blocks.
@@ -141,6 +143,7 @@ function blockStyleFunc(block) {
 }
 
 module.exports = {
+    stateToHTML,
     blockStyleFunc,
     setBlockData,
     getCurrentBlock,

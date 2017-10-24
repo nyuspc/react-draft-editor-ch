@@ -17,7 +17,7 @@ app.get('*', (req, res) => {
   res.sendFile(path.join(__dirname, '../demo/index.html'));
 });
 
-app.listen(3001, '192.168.1.187', (err) => {
+app.listen(3002, '192.168.1.187', (err) => {
   if (err) {
     console.log(err);
     return;

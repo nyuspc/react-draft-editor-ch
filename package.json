@@ -1,6 +1,6 @@
 {
   "name": "react-draft-editor-ch",
-  "version": "0.6.7",
+  "version": "0.6.8",
   "description": "An editor on top of DraftJS with Chinese options and menus.",
   "main": "dist/react-draft-editor-ch.js",
   "scripts": {
@@ -31,13 +31,15 @@
   "dependencies": {
     "babel-polyfill": "^6.26.0",
     "classnames": "^2.2.5",
+    "prop-types": "^15.6.0"
+  },
+  "peerDependencies": {
     "draft-js": "^0.10.3",
-    "prop-types": "^15.6.0",
     "react": "^16.0.0",
-    "react-dom": "^16.0.0",
-    "react-json-tree": "^0.10.9"
+    "react-dom": "^16.0.0"
   },
   "devDependencies": {
+    "react-json-tree": "^0.10.9",
     "babel-core": "^6.26.0",
     "babel-eslint": "^8.0.1",
     "babel-loader": "^7.1.2",

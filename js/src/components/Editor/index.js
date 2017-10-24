@@ -22,10 +22,10 @@ import './styles.css';
 
 export default class DraftEditor extends Component {
     static propTypes = {
+        imageUploader: PropTypes.func.isRequired,
         initContentState: PropTypes.object,
         customBlockConfig: PropTypes.object,
-        imageUploader: PropTypes.func.isRequired,
-        readOnly: PropTypes.boolean,
+        readOnly: PropTypes.bool,
         onChange: PropTypes.func,
         placeholder: PropTypes.string
     };
@@ -135,7 +135,6 @@ export default class DraftEditor extends Component {
     }
     // key handle
     handleKeyCommand: Function = (command, editorState) => {
-        console.log(command);
         const newState = RichUtils.handleKeyCommand(editorState, command);
         if (newState) {
             this.onChange(newState);
@@ -182,18 +181,20 @@ export default class DraftEditor extends Component {
     }
     render() {
         const {
-            placeholder
+            placeholder,
+            readOnly
         } = this.props;
         const {
             editorState
         } = this.state;
         return (
             <div className="rde-wrap">
-                { !this.props.readOnly && <ToolBar
+                { !readOnly && <ToolBar
                     currentState={editorState}
                     imageUploader={this.props.imageUploader}
                     changeState={this.changeEditorState}
                     customBlockConfig={this.props.customBlockConfig}
+                    ref={(ref) => { this.wrapper = ref; }}
                 /> }
                 <Editor
                     onTab={this.onTab}
@@ -206,12 +207,13 @@ export default class DraftEditor extends Component {
                     blockStyleFn={blockStyleFunc}
                     editorState={editorState}
                     onChange={this.onChange}
-                    readOnly={this.props.readOnly}
+                    readOnly={readOnly}
                     handleKeyCommand={this.handleKeyCommand}
                     handleBeforeInput={this.handleBeforeInput}
                     handlePastedText={this.handlePastedText}
                     handleReturn={this.handleReturn}
                     placeholder={placeholder}
+                    ref={(ref) => { this.editor = ref; }}
                 />
             </div>
         );
