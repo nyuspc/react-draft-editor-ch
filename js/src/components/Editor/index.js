@@ -78,11 +78,11 @@ export default class DraftEditor extends Component {
         return EditorState.createEmpty(decorator);
     }
     // change EditorState
-    changeEditorState: Function = (editorState) => {
-        this.setState({
-            editorState
-        });
-    }
+    // changeEditorState: Function = (editorState) => {
+    //     this.setState({
+    //         editorState
+    //     });
+    // }
     // handle return key
     handleReturn: Function = (event) => {
         const { editorState } = this.state;
@@ -192,14 +192,14 @@ export default class DraftEditor extends Component {
                 { !readOnly && <ToolBar
                     currentState={editorState}
                     imageUploader={this.props.imageUploader}
-                    changeState={this.changeEditorState}
+                    changeState={this.onChange}
                     customBlockConfig={this.props.customBlockConfig}
                     ref={(ref) => { this.wrapper = ref; }}
                 /> }
                 <Editor
                     onTab={this.onTab}
                     blockRendererFn={blockRendererFunc(
-                        this.changeEditorState,
+                        this.onChange,
                         this.getEditorState,
                         this.props.customBlockConfig,
                         this.props.imageUploader
