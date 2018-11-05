@@ -27,6 +27,7 @@ export default class DraftEditor extends Component {
         customBlockConfig: PropTypes.object,
         readOnly: PropTypes.bool,
         onChange: PropTypes.func,
+        onBlur: PropTypes.func,
         placeholder: PropTypes.string
     };
     constructor(props) {
@@ -55,6 +56,14 @@ export default class DraftEditor extends Component {
             this.setState({
                 editorState
             });
+        }
+    };
+    // trigger when editorState blur
+    onBlur: Function = () => {
+        console.info('bbblur');
+        const { onBlur } = this.props;
+        if (onBlur) {
+            onBlur();
         }
     };
     onTab: Function = (event) => {
@@ -207,6 +216,7 @@ export default class DraftEditor extends Component {
                     blockStyleFn={blockStyleFunc}
                     editorState={editorState}
                     onChange={this.onChange}
+                    onBlur={this.onBlur}
                     readOnly={readOnly}
                     handleKeyCommand={this.handleKeyCommand}
                     handleBeforeInput={this.handleBeforeInput}

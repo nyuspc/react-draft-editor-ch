@@ -319,6 +319,7 @@ class Demo extends Component {
                         <Editor
                             initContentState={this.state.rawContentState}
                             onChange={this.onContentStateChange}
+                            onBlur={()=>{console.info('blur')}}
                             imageUploader={this.imageUploader}
                             customBlockConfig={customBlockConfig}
                             placeholder="写点什么吧..."
